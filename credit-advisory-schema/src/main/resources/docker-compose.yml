@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres-credit-bank
+    image: 'postgres:15.5'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./ddl/init.sql:/docker-entrypoint-initdb.d/01_init.sql
+      - ./dml/data.sql:/docker-entrypoint-initdb.d/02_data.sql
+    restart: always
+    environment:
+      - 'POSTGRES_DB=credit_bank'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
