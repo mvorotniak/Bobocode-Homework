@@ -21,7 +21,7 @@
    pictures(id, nasa_id, img_src, camera_id, created_at)
    ```
 
-## Connecting to local database
+## Connecting to local database (outdated)
 
 1. Make sure you have Docker installed on your local machine
 2. Run the following commands:
@@ -30,6 +30,10 @@
 3. Now that you have Postgres running on `localhost:5432` you can connect to it from IntelliJ IDEA
 4. After connecting to your local database you can open a Query Console from IntelliJ IDEA and run queries in order to create a database and tables. 
 You can find queries used to make this homework in the `scripts.sql` file in resources folder.
+
+## Before running the app
+
+Do not forget to add VM option `-DNASA_API_KEY={your_api_key_here}`
 
 
 

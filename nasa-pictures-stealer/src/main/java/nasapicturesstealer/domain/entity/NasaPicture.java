@@ -1,16 +1,8 @@
 package nasapicturesstealer.domain.entity;
 
 import lombok.Builder;
-import lombok.Data;
 
 @Builder
-@Data
-public class NasaPicture {
+public record NasaPicture(Integer nasaId, String imgSrc, NasaCamera nasaCamera) {
 
-  private Integer nasaId;
-  
-  private String imgSrc;
-  
-  private NasaCamera nasaCamera;
-  
 }

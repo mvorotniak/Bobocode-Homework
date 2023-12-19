@@ -1,14 +1,5 @@
 package nasapicturesstealer.rest.dto;
 
-import lombok.Data;
-
-@Data
-public class NasaPictureDTO {
-
-  private Long nasaId;
-
-  private String imgSrc;
-  
-  private String cameraName;
+public record NasaPictureDTO(Long nasaId, String imgSrc, String cameraName) {
 
 }

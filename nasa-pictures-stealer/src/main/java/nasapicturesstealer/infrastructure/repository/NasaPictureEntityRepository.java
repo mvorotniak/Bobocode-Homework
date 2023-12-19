@@ -1,17 +1,16 @@
 package nasapicturesstealer.infrastructure.repository;
 
-import java.util.List;
-
+import jakarta.persistence.QueryHint;
 import nasapicturesstealer.infrastructure.entity.NasaPictureEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.data.util.Pair;
+import org.springframework.data.jpa.repository.QueryHints;
+
+import java.util.List;
+import java.util.Set;
 
 public interface NasaPictureEntityRepository extends JpaRepository<NasaPictureEntity, Long> {
 
-  @Query("SELECT new org.springframework.data.util.Pair(picture.nasaId, picture.id) " 
-    + "FROM NasaPictureEntity picture WHERE picture.nasaId IN (:ids)")
-  List<Pair<Integer, Long>> findAllByNasaIds(@Param("ids") List<Integer> nasaIds);
+    @QueryHints({@QueryHint(name = org.hibernate.annotations.QueryHints.READ_ONLY, value = "true")})
+    Set<NasaPictureEntity> findByNasaIdIn(List<Integer> nasaIds);
 
 }
