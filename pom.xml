@@ -18,7 +18,8 @@
 	
 	<modules>
 		<module>nasa-pictures-stealer</module>
-	</modules>
+        <module>credit-advisory-schema</module>
+    </modules>
 	<properties>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 	</properties>
