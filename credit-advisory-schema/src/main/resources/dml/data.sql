@@ -1,11 +1,11 @@
 -- Insert into users table
-INSERT INTO users (email, username) VALUES
-                                        ('user1@example.com', 'User1'),
-                                        ('user2@example.com', 'User2'),
-                                        ('user3@example.com', 'User3'),
-                                        ('user4@example.com', 'User4'),
-                                        ('user5@example.com', 'User5'),
-                                        ('user6@example.com', 'User6');
+INSERT INTO users (email, username, user_type) VALUES
+                                        ('user1@example.com', 'User1', 'advisor'),
+                                        ('user2@example.com', 'User2', 'advisor'),
+                                        ('user3@example.com', 'User3', 'advisor'),
+                                        ('user4@example.com', 'User4', 'applicant'),
+                                        ('user5@example.com', 'User5', 'applicant'),
+                                        ('user6@example.com', 'User6', 'applicant');
 
 -- Insert into advisors table
 INSERT INTO advisors (id, role) VALUES
