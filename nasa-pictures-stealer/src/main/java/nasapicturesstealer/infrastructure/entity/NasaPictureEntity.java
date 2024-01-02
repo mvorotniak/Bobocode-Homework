@@ -1,6 +1,7 @@
 package nasapicturesstealer.infrastructure.entity;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,9 +33,10 @@ public class NasaPictureEntity {
 
     @ToString.Exclude
     @JoinColumn(name = "camera_id", nullable = false)
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     private NasaCameraEntity camera;
 
+    @Column(nullable = false, updatable = false)
     private Integer nasaId;
 
     private String imgSrc;
