@@ -33,16 +33,9 @@ public class NasaClient {
 
         log.info("Calling Nasa Service with url=[{}] with sol=[{}] to get pictures...", url, sol);
 
-        Optional<JsonNode> jsonNode = Optional.ofNullable(restTemplate.getForObject(url, JsonNode.class));
-        List<JsonNode> jsonNodes = jsonNode
-                .map(obj -> StreamSupport.stream(obj.findValue(NasaFields.PHOTOS).spliterator(), true).toList())
-                .orElse(Collections.emptyList());
+        List<JsonNode> jsonNodes = this.getPicturesJsons(url);
 
         log.info("Found a total of [{}] pictures in Nasa Service by sol=[{}]", jsonNodes.size(), sol);
-
-        if (jsonNodes.isEmpty()) {
-            return Collections.emptyList();
-        }
 
         return jsonNodes.stream()
                 .map(node -> NasaPicture.builder()
@@ -51,6 +44,13 @@ public class NasaClient {
                         .nasaCamera(buildNasaCamera(node))
                         .build())
                 .toList();
+    }
+    
+    private List<JsonNode> getPicturesJsons(String url) {
+        Optional<JsonNode> jsonNode = Optional.ofNullable(restTemplate.getForObject(url, JsonNode.class));
+        return jsonNode
+          .map(obj -> StreamSupport.stream(obj.findValue(NasaFields.PHOTOS).spliterator(), true).toList())
+          .orElse(Collections.emptyList());
     }
 
     private static NasaCamera buildNasaCamera(JsonNode node) {

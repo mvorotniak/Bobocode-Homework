@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(exclude = {"pictures"})
@@ -24,9 +25,10 @@ public class NasaCameraEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nasa_id")
+    @Column(nullable = false, updatable = false)
     private Integer nasaId;
 
+    @Column(nullable = false, updatable = false)
     private String name;
 
     @CreationTimestamp
@@ -37,7 +39,7 @@ public class NasaCameraEntity {
 
     @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "camera", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<NasaPictureEntity> pictures;
+    private List<NasaPictureEntity> pictures = new ArrayList<>();
 
     public NasaCameraEntity(Integer nasaId,
                             String name) {
