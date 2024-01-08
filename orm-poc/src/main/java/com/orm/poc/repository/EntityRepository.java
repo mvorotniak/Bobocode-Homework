@@ -31,12 +31,8 @@ public class EntityRepository<T, ID> implements Repository<T, ID> {
          Statement statement = connection.createStatement()) {
       
       ResultSet resultSet = this.executeStatement(statement, id);
-      
-      if (resultSet.next()) {
-        return Optional.of(this.entityMapper.mapToEntity(resultSet, this.type));
-      } else {
-        return Optional.empty();
-      }
+
+      return resultSet.next() ? Optional.of(this.entityMapper.mapToEntity(resultSet, this.type)) : Optional.empty();
       
     } catch (Exception e) {
       throw new OrmPocException(String.format("Error occurred finding entity with id [%s]", id), e);
