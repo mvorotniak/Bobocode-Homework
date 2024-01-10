@@ -1,4 +1,4 @@
-package com.orm.poc.exception;
+package com.orm.poc.domain.exception;
 
 public class OrmPocException extends RuntimeException {
     
