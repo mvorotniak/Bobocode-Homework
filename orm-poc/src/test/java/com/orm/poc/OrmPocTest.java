@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,21 +26,17 @@ class OrmPocTest {
     @DisplayName("Should find Person by id in database or cache")
     @Test
     void findPersonById() {
-        Optional<Person> personOptional1 = Optional.empty();
-        Optional<Person> personOptional2 = Optional.empty();
-        Optional<Person> personOptional3 = Optional.empty();
+        Optional<Person> personOptional1;
+        Optional<Person> personOptional2;
+        Optional<Person> personOptional3;
         
         try (OrmPocSession session = this.sessionFactory.openSession()) {
             personOptional1 = session.findById(Person.class, 1L);
             personOptional2 = session.findById(Person.class, 1L);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         try (OrmPocSession session = this.sessionFactory.openSession()) {
             personOptional3 = session.findById(Person.class, 1L);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         assertThat(personOptional1).isPresent();
@@ -67,8 +62,6 @@ class OrmPocTest {
 
         try (OrmPocSession session = this.sessionFactory.openSession()) {
             personOptional = session.findById(Person.class, 2L);
-        } catch (IOException e) {
-            personOptional = Optional.empty();
         }
 
         assertThat(personOptional).isEmpty();

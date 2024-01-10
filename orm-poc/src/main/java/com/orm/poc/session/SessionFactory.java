@@ -13,7 +13,6 @@ public class SessionFactory {
         this.entityDao = new EntityDao(dataSource);
     }
 
-
     public OrmPocSession openSession() {
         return new FirstLevelCacheOrmPocSession(this.entityDao);
     }

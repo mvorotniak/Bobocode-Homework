@@ -3,7 +3,6 @@ package com.orm.poc.session;
 import com.orm.poc.dao.Dao;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class OrmPocSession implements Session {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         // Do nothing
     }
 }
