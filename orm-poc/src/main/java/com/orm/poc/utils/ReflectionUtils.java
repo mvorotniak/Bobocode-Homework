@@ -3,7 +3,7 @@ package com.orm.poc.utils;
 import com.orm.poc.annotation.Column;
 import com.orm.poc.annotation.Id;
 import com.orm.poc.annotation.Table;
-import com.orm.poc.exception.OrmPocException;
+import com.orm.poc.domain.exception.OrmPocException;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.Field;
