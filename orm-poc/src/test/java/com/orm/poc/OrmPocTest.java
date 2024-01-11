@@ -4,15 +4,14 @@ import com.orm.poc.configuration.PostgreSQLDatabaseConfiguration;
 import com.orm.poc.entity.Person;
 import com.orm.poc.session.OrmPocSession;
 import com.orm.poc.session.SessionFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.sql.DataSource;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class OrmPocTest {
     
     private SessionFactory sessionFactory;
@@ -23,6 +22,7 @@ class OrmPocTest {
         this.sessionFactory = new SessionFactory(dataSource);
     }
     
+    @Order(1)
     @DisplayName("Should find Person by id in database or cache")
     @Test
     void findPersonById() {
@@ -55,6 +55,7 @@ class OrmPocTest {
         assertThat(person1.getLastName()).isEqualTo("Last");
     }
 
+    @Order(2)
     @DisplayName("Should return Optional.empty when Person not found")
     @Test
     void findPersonById_withNotExistingId() {
@@ -65,6 +66,41 @@ class OrmPocTest {
         }
 
         assertThat(personOptional).isEmpty();
+    }
+
+    @Order(3)
+    @DisplayName("Should update entity if changed")
+    @Test
+    void updatePerson() {
+        Optional<Person> personOptional;
+
+        try (OrmPocSession session = this.sessionFactory.openSession()) {
+            personOptional = session.findById(Person.class, 1L);
+            
+            personOptional.ifPresent(person -> person.setFirstName("First (Updated)"));
+        }
+
+        Optional<Person> personOptional2;
+
+        try (OrmPocSession session = this.sessionFactory.openSession()) {
+            personOptional2 = session.findById(Person.class, 1L);
+        }
+
+        assertThat(personOptional).isPresent();
+        assertThat(personOptional2).isPresent();
+        
+        Person person = personOptional.get();
+        Person person2 = personOptional2.get();
+        
+        assertThat(person.getId())
+                .isEqualTo(person2.getId())
+                .isEqualTo(1L);
+        assertThat(person.getFirstName())
+                .isEqualTo(person2.getFirstName())
+                .isEqualTo("First (Updated)");
+        assertThat(person.getLastName())
+                .isEqualTo(person2.getLastName())
+                .isEqualTo("Last");
     }
 
 }
